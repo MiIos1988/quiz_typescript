@@ -1,11 +1,17 @@
 import { useState } from "react";
 import "./App.css";
 
+type Answer = {
+  text: string | number;
+  correct: boolean;
+};
+
 function App() {
   const data = [
     {
       id: 1,
-      question: "Rolex is the company that specializes in what type of product?",
+      question:
+        "Rolex is the company that specializes in what type of product?",
       answers: [
         {
           text: "Phone",
@@ -97,9 +103,9 @@ function App() {
   const [score, setScore] = useState(false);
   const [trueAnswer, setTrueAnswer] = useState(0);
 
-  const newQuestion = (ans) => {
+  const newQuestion = (answer: Answer) => {
     const nextQuestion = numberQuestion + 1;
-    if (ans.correct) setTrueAnswer((prev) => prev + 1);
+    if (answer.correct) setTrueAnswer((prev) => prev + 1);
 
     if (numberQuestion + 1 < data.length) {
       setNumberQuestion(nextQuestion);
@@ -135,16 +141,16 @@ function App() {
               <div className="question">{data[numberQuestion].question}</div>
             </div>
             <div className="right-app">
-              {data[numberQuestion].answers.map((a, id) => {
+              {data[numberQuestion].answers.map((answer, id) => {
                 return (
                   <div
                     className="answer"
                     key={id}
                     onClick={() => {
-                      newQuestion(a, data[numberQuestion]);
+                      newQuestion(answer);
                     }}
                   >
-                    {a.text}
+                    {answer.text}
                   </div>
                 );
               })}
